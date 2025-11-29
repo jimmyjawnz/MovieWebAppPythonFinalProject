@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ record.title }} Details</title>
+    </head>
+    <body>
+    <div id="media-details">
+        <h2>{{ record.title }} Details</h2>
+        <span>Id: {{ record.show_id }}</span>
+        <br />
+        <br />
+        <label for="description">Description</label>
+        <br />
+        <p id="description">{{ record.description }}</p>
+        <br />
+        <label for="year">Release Year</label>
+        <input id="year" value="{{ record.release_year }}" />
+        <br />
+        <br />
+        <label for="director">Director(s)</label>
+        <input id="director" value="{{ record.director }}" />
+        <br />
+        <br />
+        <label for="type">Type</label>
+        <input id="type" value="{{ record.type }}" />
+        <br />
+        <br />
+        <label for="age_rating">Age Rating</label>
+        <input id="age_rating" value="{{ record.age_rating }}" />
+        <br />
+        <br />
+        <label for="duration">Duration</label>
+        <input id="duration" value="{{ record.duration }}" />
+        <br />
+        <br />
+        <label for="cast">Cast</label>
+        <br />
+        <textarea id="cast" rows="8">{{ record.cast }}</textarea>
+        <br />
+        <br />
+        <label for="genre">Genre(s)</label>
+        <input id="genre" value="{{ record.listed_in }}" />
+        <br />
+        <br />
+        <label for="country">Countries</label>
+        <input id="country" value="{{ record.country }}" />
+        <br />
+        <br />
+        <label for="date_added">Date Added</label>
+        <input id="date_added" value="{{ record.date_added }}" />
+        <br />
+        <br />
+    </div>
+    </body>
+</html>

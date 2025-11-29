@@ -1,4 +1,6 @@
+from random import Random
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from movie_app.models import Movies
 
 # Home Page
@@ -9,11 +11,23 @@ def home_page(req):
 def search_page(req):
     return render(req, 'search.html', search_processing(req))
 
+# Details Page
+def details_page(req, show_id):
+    # Add check for if the passed id is 'r' or 'random'
+    # this will cause a random movie/show to be shown
+    if (show_id == 'random' or show_id == 'r'):
+        random_id = Random.randint(Random(), 1, 8807)
+        record = Movies.objects.all().filter(show_id=f"s{random_id}")[0]
+    else:
+        record = Movies.objects.all().filter(show_id=show_id)[0] # Grabs the first element of the matching id
+    return render(req, 'details.html', { 'record': record })
+
 # Search Process
 def search_processing(req):
     query = req.GET.get('q', '')
     year_filter = req.GET.get('year', '')
     country_filter = req.GET.get('country', '')
+    page_num = req.GET.get("page")
 
     results = Movies.objects.all().order_by('title')
 
@@ -36,8 +50,11 @@ def search_processing(req):
     if country_filter:
         results = results.filter(country__icontains=country_filter)
 
+    paginator = Paginator(results, 25)
+    page_obj = paginator.get_page(page_num)
     return {
         'results': results,
+        'page_obj': page_obj,
         'query': query,
         'years': years,
         'selected_year': year_filter,
