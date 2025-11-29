@@ -3,10 +3,14 @@ from movie_app.models import Movies
 
 # Home Page
 def home_page(req):
-    return render(req, 'index.html')
+    return render(req, 'index.html', search_processing(req))
 
-# Search View
-def search_population(req):
+# Search Page
+def search_page(req):
+    return render(req, 'search.html', search_processing(req))
+
+# Search Process
+def search_processing(req):
     query = req.GET.get('q', '')
     year_filter = req.GET.get('year', '')
     country_filter = req.GET.get('country', '')
@@ -16,26 +20,27 @@ def search_population(req):
     if query:
         results = results.filter(title__icontains=query)
     
+    # Sets up available years based on query
+    years = results.values_list().values_list('release_year', flat=True).distinct().order_by('-release_year')
+
+    # Sets up countries as a filter option based on query
+    countries = results.values_list('country', flat=True).distinct() # Get countries from database
+    countries = [word for sentence in countries for word in sentence.replace(',', '').split()] # Split the multi-country values
+    countries = set(countries) # Remove duplicates
+    countries = list(countries) # Transform to a list
+    countries.sort() # Order by / sort
+
     if year_filter:
         results = results.filter(release_year=year_filter)
 
     if country_filter:
-        results = results.filter(country=country_filter)
-    
-    years = Movies.objects.values_list('release_year', flat=True).distinct().order_by('-release_year')
+        results = results.filter(country__icontains=country_filter)
 
-    # sets up countries as an option
-    countries = Movies.objects.values_list('country', flat=True).distinct().order_by('country')
-    countries = [word for sentence in countries for word in sentence.replace(',', '').split()]
-    countries = set(countries)
-    countries = list(countries)
-    countries.sort()
-
-    return render(req, 'search.html', {
+    return {
         'results': results,
         'query': query,
         'years': years,
         'selected_year': year_filter,
         'countries': countries,
         'selected_country': country_filter
-    })
+    }
