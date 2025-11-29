@@ -1,7 +1,15 @@
+import base64
+from io import BytesIO
 from random import Random
 from django.shortcuts import render
 from django.core.paginator import Paginator
+import pandas as pd
 from movie_app.models import Movies
+import matplotlib.pyplot as mp
+
+# Global Colours
+colors = ['blue', 'green', 'red', 'purple', 'yellow', 'orange', 'pink', 'lime','lightblue','dimgray', 'coral', 'cyan']
+colors10 = ['blue', 'green', 'red', 'purple', 'yellow', 'orange', 'pink', 'lime','lightblue','cyan']
 
 # Home Page
 def home_page(req):
@@ -21,6 +29,28 @@ def details_page(req, show_id):
     else:
         record = Movies.objects.all().filter(show_id=show_id)[0] # Grabs the first element of the matching id
     return render(req, 'details.html', { 'record': record })
+
+# Analytics Page
+def analytics_page(req):
+    data = list(Movies.objects.all().values())
+    dataframe = pd.DataFrame(data).replace('nan', None)
+    images = []
+
+    # Create Graph for Shows over Time
+    records_per_year = dataframe['release_year'].value_counts().sort_index()
+    images.append(create_graph(records_per_year.index, records_per_year.values, 'line', 
+        'Time (years)', '', 'Movie/Show Release Distribution over Time'))
+
+    # Create Graph for Shows per Age Rating
+    records_per_ageRating = dataframe['age_rating'].value_counts().sort_values().nlargest(10)
+    images.append(create_graph(records_per_ageRating.values, records_per_ageRating.index, 'pie', 
+        '', '', 'Percent of Shows per Age Rating (Top 10)'))
+
+    records_per_director = dataframe['director'].value_counts().sort_values().nlargest(10)
+    images.append(create_graph(records_per_director.index, records_per_director.values, 'barh', 
+        '', '', 'Directors with most Movies Directed (Top 10)'))
+    
+    return render(req, 'graphs.html', { 'images': images})
 
 # Search Process
 def search_processing(req):
@@ -50,8 +80,10 @@ def search_processing(req):
     if country_filter:
         results = results.filter(country__icontains=country_filter)
 
+    # Set up pagination of 25 entries
     paginator = Paginator(results, 25)
     page_obj = paginator.get_page(page_num)
+
     return {
         'results': results,
         'page_obj': page_obj,
@@ -61,3 +93,32 @@ def search_processing(req):
         'countries': countries,
         'selected_country': country_filter
     }
+
+def create_graph(x, y, gtype, x_label, y_label, title, y2 = []):
+    fig, ax = mp.subplots()
+    
+    match gtype:
+        case 'bar':
+            ax.bar(x, y)
+        case 'barh':
+            ax.barh(x, y, color=colors10)
+            ax.set_xticks([0, 5, 10, 15, 20])
+            ax.invert_yaxis()
+        case 'pie':
+            ax.pie(x, labels=y, colors=colors, autopct='%1.1f%%')
+        case 'hist':
+            ax.hist(x, bins=y)
+        case _:
+            ax.plot(x, y)
+            # if (y2.len <= 0):
+            #     ax.plot(x, y2)                
+                
+    
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.set_title(title)
+
+    tmpfile = BytesIO()
+    fig.savefig(tmpfile, format='png', bbox_inches='tight')
+    encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
+    return encoded
