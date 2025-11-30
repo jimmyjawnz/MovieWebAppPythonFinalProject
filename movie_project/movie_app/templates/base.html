@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Movie App{% endblock %}</title>
+
+    <!-- Link to bookstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+      <!-- Link for bootstrap Icons -->
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+
+        <!-- link to bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <!-- Link to the css stylesheet -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<div class="header-container">
+    <header class="banner d-flex align-items-center justify-content-start">
+    </header>
+</div>
+
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

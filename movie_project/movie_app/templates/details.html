@@ -1,55 +1,69 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{ record.title }} Details</title>
-    </head>
-    <body>
-    <div id="media-details">
-        <h2>{{ record.title }} Details</h2>
-        <span>Id: {{ record.show_id }}</span>
-        <br />
-        <br />
-        <label for="description">Description</label>
-        <br />
-        <p id="description">{{ record.description }}</p>
-        <br />
-        <label for="year">Release Year</label>
-        <input id="year" value="{{ record.release_year }}" />
-        <br />
-        <br />
-        <label for="director">Director(s)</label>
-        <input id="director" value="{{ record.director }}" />
-        <br />
-        <br />
-        <label for="type">Type</label>
-        <input id="type" value="{{ record.type }}" />
-        <br />
-        <br />
-        <label for="age_rating">Age Rating</label>
-        <input id="age_rating" value="{{ record.age_rating }}" />
-        <br />
-        <br />
-        <label for="duration">Duration</label>
-        <input id="duration" value="{{ record.duration }}" />
-        <br />
-        <br />
-        <label for="cast">Cast</label>
-        <br />
-        <textarea id="cast" rows="8">{{ record.cast }}</textarea>
-        <br />
-        <br />
-        <label for="genre">Genre(s)</label>
-        <input id="genre" value="{{ record.listed_in }}" />
-        <br />
-        <br />
-        <label for="country">Countries</label>
-        <input id="country" value="{{ record.country }}" />
-        <br />
-        <br />
-        <label for="date_added">Date Added</label>
-        <input id="date_added" value="{{ record.date_added }}" />
-        <br />
-        <br />
+{% extends "base.html" %}
+
+{% block title %}{{ record.title }} Details{% endblock %}
+
+{% block content %}
+<div id="media-details" class="card p-4 shadow-sm">
+    <h2 class="mb-3">{{ record.title }} Details</h2>
+
+    <p class="text-muted mb-4">
+        <strong>Id:</strong> {{ record.show_id }}
+    </p>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <p id="description" class="form-control-plaintext">
+            {{ record.description }}
+        </p>
     </div>
-    </body>
-</html>
+
+    <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="year" class="form-label">Release Year</label>
+            <input id="year" class="form-control" value="{{ record.release_year }}" readonly>
+        </div>
+
+        <div class="mb-3 col-md-4">
+            <label for="type" class="form-label">Type</label>
+            <input id="type" class="form-control" value="{{ record.type }}" readonly>
+        </div>
+
+        <div class="mb-3 col-md-4">
+            <label for="age_rating" class="form-label">Age Rating</label>
+            <input id="age_rating" class="form-control" value="{{ record.age_rating }}" readonly>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="director" class="form-label">Director(s)</label>
+        <input id="director" class="form-control" value="{{ record.director }}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="duration" class="form-label">Duration</label>
+        <input id="duration" class="form-control" value="{{ record.duration }}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="cast" class="form-label">Cast</label>
+        <textarea id="cast" class="form-control" rows="4" readonly>{{ record.cast }}</textarea>
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-md-6">
+            <label for="genre" class="form-label">Genre(s)</label>
+            <input id="genre" class="form-control" value="{{ record.listed_in }}" readonly>
+        </div>
+
+        <div class="mb-3 col-md-6">
+            <label for="country" class="form-label">Countries</label>
+            <input id="country" class="form-control" value="{{ record.country }}" readonly>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="date_added" class="form-label">Date Added</label>
+        <input id="date_added" class="form-control" value="{{ record.date_added }}" readonly>
+    </div>
+</div>
+{% endblock %}
