@@ -1,0 +1,101 @@
+body {
+    background-color: black;
+    color: #eee;
+    font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+    color: #c57b57; 
+}
+
+
+.header-container header {
+    margin-bottom: 5rem;
+    width: 100vw;
+    box-shadow:
+        0 5px 5px black,
+        0 10px 20px  rgba(255, 255, 255, 20);
+}
+
+.header-banner {
+    height: 200px;
+    background: url("/static/Header-Banner.png") center/cover no-repeat;
+}
+
+.banner {
+    height: 200px;                     /* the banner height */
+    background-image: url("/static/Header-Banner.png");
+    background-size: cover;            /* makes the image fill the space */
+    background-position: center;       /* centers the image */
+    background-repeat: no-repeat;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8); /* glowing drop shadow */
+}
+
+
+
+
+#search-bar input,
+#search-bar select,
+#search-bar button {
+    margin-right: 10px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: none;
+}
+
+#search-bar button {
+    background: #c57b57;
+    color: white;
+    cursor: pointer;
+}
+
+#search-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+#search-results th {
+    background: #c57b57;
+    color: white;
+    padding: 10px;
+}
+
+#search-results td {
+    background: #212529;
+    color: #eee;
+    padding: 10px;
+}
+
+#search-results tr:nth-child(even) td {
+    background: #495057;
+}
+
+#search-results tr:hover td {
+    background: #6c757d;
+}
+
+
+.form-check-input:checked {
+    background-color: #ff8c42 !important;  
+    border-color: #ff8c42 !important;
+}
+
+.form-check-input {
+    border-color: #ff8c42 !important;
+}
+
+.form-check-label {
+    color: white;
+}
+
+.movie-title {
+    color: #ffb347 !important; 
+    font-weight: 600;
+}
+
+.movie-title:hover {
+    color: #ffd28c !important;     
+    text-decoration: underline;
+}
