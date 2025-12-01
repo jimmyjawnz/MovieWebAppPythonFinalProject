@@ -4,13 +4,11 @@
 
 {% block content %}
 
+<a href="{% url 'analytics' %}" class="button p-2" style="background-color: grey; text-decoration: none; color: black; font-weight: 600;
+border-radius: 5px;">View Analytics</a>
 
-
-<!-- <div class="header-container">
-    <header class="justify-content-start py-3 mb-4">
-        <h1>Movie & TV Show Database</h1>
-    </header>
-</div> -->
+<a href="{% url 'details/r/' %}" class="button p-2" style="background-color: grey; text-decoration: none; color: black; font-weight: 600;
+border-radius: 5px;">Mystery Movie</a>
 
 <div id="search">
     {% include 'search.html' %}

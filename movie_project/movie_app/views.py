@@ -8,8 +8,8 @@ from movie_app.models import Movies
 import matplotlib.pyplot as mp
 
 # Global Colours
-colors = ['blue', 'green', 'red', 'purple', 'yellow', 'orange', 'pink', 'lime','lightblue','dimgray', 'coral', 'cyan']
-colors10 = ['blue', 'green', 'red', 'purple', 'yellow', 'orange', 'pink', 'lime','lightblue','cyan']
+colors = ['#FFB950', '#FFAD33', '#FF931F', '#FF7E33', '#FA5E1F', '#EC3F13', '#B81702', '#A50104','#8E0103','#7A0103']
+colors10 = ['#FFB950', '#FFAD33', '#FF931F', '#FF7E33', '#FA5E1F', '#EC3F13', '#B81702', '#A50104','#8E0103','#7A0103']
 
 # Home Page
 def home_page(req):
@@ -36,15 +36,15 @@ def analytics_page(req):
     dataframe = pd.DataFrame(data).replace('nan', None)
     images = []
 
-    # Create Graph for Shows over Time
-    records_per_year = dataframe['release_year'].value_counts().sort_index()
-    images.append(create_graph(records_per_year.index, records_per_year.values, 'line', 
-        'Time (years)', '', 'Movie/Show Release Distribution over Time'))
-
     # Create Graph for Shows per Age Rating
     records_per_ageRating = dataframe['age_rating'].value_counts().sort_values().nlargest(10)
     images.append(create_graph(records_per_ageRating.values, records_per_ageRating.index, 'pie', 
         '', '', 'Percent of Shows per Age Rating (Top 10)'))
+    
+    # Create Graph for Shows over Time
+    records_per_year = dataframe['release_year'].value_counts().sort_index()
+    images.append(create_graph(records_per_year.index, records_per_year.values, 'line', 
+        'Time (years)', '', 'Movie/Show Release Distribution over Time'))
 
     records_per_director = dataframe['director'].value_counts().sort_values().nlargest(10)
     images.append(create_graph(records_per_director.index, records_per_director.values, 'barh', 

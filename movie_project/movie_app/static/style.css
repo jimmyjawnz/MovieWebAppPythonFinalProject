@@ -4,7 +4,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h6 {
     color: #c57b57; 
 }
 
@@ -98,4 +98,10 @@ h1, h2, h3 {
 .movie-title:hover {
     color: #ffd28c !important;     
     text-decoration: underline;
+}
+
+
+.id-modal{
+    color: #c57b57 !important;
+    font-weight: 600;
 }
