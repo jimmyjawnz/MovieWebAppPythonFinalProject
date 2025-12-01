@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Movies(models.Model):
-    show_id = models.CharField(unique=True,max_length=6)
+    show_id = models.CharField(unique=True,max_length=6,primary_key=True)
     type = models.CharField(max_length=8)
     title = models.CharField(unique=True,max_length=255)
     director = models.CharField(max_length=255)
