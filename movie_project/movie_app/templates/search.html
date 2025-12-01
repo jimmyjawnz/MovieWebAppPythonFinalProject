@@ -100,6 +100,7 @@
                     <th>Duration</th>
                     <th>Rating</th>
                     <th>Genre(s)</th>
+                    <th>Cast</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,6 +117,7 @@
                         <td>{{ record.duration }}</td>
                         <td>{{ record.age_rating }}</td>
                         <td>{{ record.listed_in }}</td>
+                        <td>{{ record.cast }}</td>
                     </tr>
                 {% empty %}
                     <tr id="no-records" style="text-align: center;">
@@ -157,7 +159,7 @@
       </div>
 
       <div class="modal-body">
-        <p class="text-muted mb-3">
+        <p class=" mb-3" style="color: #c57b57; font-weight: 600;">
           <strong>Id:</strong> {{ record.show_id }}
         </p>
 
