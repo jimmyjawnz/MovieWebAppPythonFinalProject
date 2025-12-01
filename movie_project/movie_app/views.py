@@ -38,17 +38,6 @@ def analytics_page(req):
     dataframe = pd.DataFrame(data)
     images = [] # for storing the base64 strings for displaying in the DOM
 
-<<<<<<< HEAD
-    # Create Graph for Shows per Age Rating
-    records_per_ageRating = dataframe['age_rating'].value_counts().sort_values().nlargest(10)
-    images.append(create_graph(records_per_ageRating.values, records_per_ageRating.index, 'pie', 
-        '', '', 'Percent of Shows per Age Rating (Top 10)'))
-    
-    # Create Graph for Shows over Time
-    records_per_year = dataframe['release_year'].value_counts().sort_index()
-    images.append(create_graph(records_per_year.index, records_per_year.values, 'line', 
-        'Time (years)', '', 'Movie/Show Release Distribution over Time'))
-=======
     # Create Graph for Movies/Shows over Time
     records_per_year = dataframe['release_year'].value_counts().sort_index()
     images.append(create_graph(records_per_year.index, records_per_year.values, 'line', 
@@ -58,7 +47,6 @@ def analytics_page(req):
     records_per_ageRating = dataframe['age_rating'].value_counts().sort_values().nlargest(10)
     images.append(create_graph(records_per_ageRating.values, records_per_ageRating.index, 'pie', 
         '', '', 'Percent of Movies/Shows per Age Rating (Top 10)'))
->>>>>>> 7dee467bcd672e19eafc9e525f70bcd8a5ec38a2
 
     # Create Graph for Directors with most Movies
     records_per_director = dataframe['director'].value_counts().sort_values().nlargest(10)
