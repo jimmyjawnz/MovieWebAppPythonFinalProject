@@ -1,0 +1,19 @@
+We recommend using a venv when running this project with the following packages installed:
+- django
+- pandas
+- numpy
+- matplotlib
+
+This project also uses the following python modules:
+- os
+- sys
+- io
+- base64
+- random
+
+Data is already preloaded onto the db.sqlite3 file but can be reloaded by:
+- Deleting the db.sqlite3 file
+> python manage.py makemigrations
+> python manage.py migrate
+> python manage.py shell
+> exec(open("movie_project/load_data.py").read())
