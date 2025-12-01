@@ -35,7 +35,7 @@ def details_page(req, show_id):
 def analytics_page(req):
     # Collect database data and make it a dataframe
     data = list(Movies.objects.all().values())
-    dataframe = pd.DataFrame(data).replace('nan', None)
+    dataframe = pd.DataFrame(data)
     images = [] # for storing the base64 strings for displaying in the DOM
 
     # Create Graph for Movies/Shows over Time
@@ -115,10 +115,12 @@ def search_processing(req):
 
 ## For parsing column results to individual strings for use in filtering
 def parse_strings(results, column):
-    arr = np.array(list(results.values_list(column, flat=True).distinct())) # Get values from database
+    arr = np.array(list(results.values_list(column, flat=True).distinct()), dtype=str) # Get values from database
     arr = np.char.split(arr, sep=', ')  # Split the multi-values
     arr = np.concatenate(arr) # Join to 1 array
     arr = np.unique(arr) # Get only Unique/Distinct
+    arr = arr[arr != 'None'] # Remove any None values
+    arr = arr[arr != ''] # Remove any Empty values
     arr.sort() # Order by / Sort
     return arr
 
